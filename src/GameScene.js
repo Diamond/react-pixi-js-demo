@@ -6,6 +6,8 @@ import MarioSprite from './mario_sprite.jpg';
 import GameText from './GameText';
 import GameSprite from './GameSprite';
 
+import Engine from './Engine';
+
 class GameScene extends Component {
   constructor(props) {
     super(props);
@@ -13,10 +15,10 @@ class GameScene extends Component {
     this.state = {
       renderer: null,
       stage: null,
+      engine: null,
     };
 
     this.init = this.init.bind(this);
-    this.animate = this.animate.bind(this);
   }
   init() {
     // Build the initial renderer context
@@ -34,6 +36,11 @@ class GameScene extends Component {
     // Make the renderer and stage accessible
     this.setState({ renderer, stage });
 
+    // Load the sprites we'll use later
+    PIXI
+      .loader
+      .add(MarioSprite);
+
     this.animate();
   }
   componentDidMount() {
@@ -49,8 +56,8 @@ class GameScene extends Component {
     return (
       <div className="GameScene">
         <div id="GameCanvas">
-          <GameSprite image={MarioSprite} x={200} y={150} stage={this.state.stage} />
-          <GameText text="Basic Text in Pixi" x={30} y={90} stage={this.state.stage} />
+          <GameSprite image={MarioSprite} x={400} y={350} stage={this.state.stage} />
+          <GameText text="Basic Pixi Text in React" x={30} y={90} stage={this.state.stage} />
         </div>
       </div>
     )
