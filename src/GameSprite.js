@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 const PIXI = require('pixi.js');
 
 const GameSprite = (props) => {

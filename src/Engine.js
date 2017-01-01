@@ -1,14 +1,16 @@
 const PIXI = require('pixi.js');
 
-import MarioSprite from './mario_sprite.jpg';
-
 class Engine {
   constructor(width, height, targetEl, opts={}) {
+    // Initial context binds
+    this.animate     = this.animate.bind(this);
+    this.loadSprites = this.loadSprites.bind(this);
+
     // Build the initial renderer context
     this.renderer = PIXI.autoDetectRenderer(width, height, opts);
 
     // Gross, but apparently necessary
-    document.querySelector(targetEl).appendChild(renderer.view);
+    document.querySelector(targetEl).appendChild(this.renderer.view);
 
     // create the root of the scene graph
     this.stage = new PIXI.Container();
@@ -16,18 +18,18 @@ class Engine {
     // Render to the stage
     this.renderer.render(this.stage);
 
-    // Load the sprites we'll use later
+    // Call the main animation loop
+    this.animate();
+  }
+  loadSprites(sprites=[]) {
+    // Load any sprites into the texture cache
     PIXI
       .loader
-      .add(MarioSprite)
-      .load(this.setup);
-
-    this.animate();
-
-    return { this.renderer, this.stage };
+      .add(sprites)
+      .load(this.setup)
   }
   setup() {
-
+    // Do a thing?
   }
   animate() {
     requestAnimationFrame(this.animate);
